@@ -20,11 +20,11 @@ function request(endpoint, method, body = null, options = {}) {
   return apiCall(resolveEndpoint(endpoint), method, body, options.skipAuth);
 }
 
-export function register(username, password) {
+export function register(username, password, email, organisation, role = "User") {
   return request(
     CONFIG.API.REGISTER,
     "POST",
-    { username, passwordHash: password },
+    { username, password, email, organisation, role },
     { skipAuth: true }
   );
 }

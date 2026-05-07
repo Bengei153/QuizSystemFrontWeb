@@ -16,6 +16,9 @@ export function LoginView({ onLogin }) {
   const [tab, setTab] = useState("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [organisation, setOrganisation] = useState("");
+  const [role, setRole] = useState("viewer");
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -44,8 +47,12 @@ export function LoginView({ onLogin }) {
 
     try {
       if (tab === "register") {
-        const response = await registerUser(username, password);
+        const response = await registerUser(username, password, email, organisation, role);
+        setUsername("");
         setPassword("");
+        setEmail("");
+        setOrganisation("");
+        setRole("viewer");
         setTab("login");
         setSuccess(
           response?.message || "Account created successfully. Sign in to continue."
@@ -131,6 +138,41 @@ export function LoginView({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {tab === "register" && (
+          <>
+            <div className="form-field">
+              <input
+                className="form-input"
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="form-field">
+              <input
+                className="form-input"
+                placeholder="Organisation"
+                type="text"
+                value={organisation}
+                onChange={(e) => setOrganisation(e.target.value)}
+              />
+            </div>
+
+            <div className="form-field">
+              <select
+                className="form-input"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="viewer">Viewer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </>
+        )}
 
         {tab === "login" && (
           <div className="form-row-inline">
