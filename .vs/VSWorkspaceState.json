@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\api",
+    "\\src\\assets",
+    "\\src\\auth",
+    "\\src\\components",
+    "\\src\\files",
+    "\\src\\pages",
+    "\\src\\styles"
+  ],
+  "SelectedNode": "\\src\\files\\App.jsx",
+  "PreviewInSolutionExplorer": false
+}
