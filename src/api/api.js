@@ -33,7 +33,7 @@ export function login(username, password) {
   return request(
     CONFIG.API.LOGIN,
     "POST",
-    { username, passwordHash: password },
+    { username, password },
     { skipAuth: true }
   );
 }

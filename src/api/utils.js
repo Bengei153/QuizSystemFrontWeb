@@ -8,7 +8,7 @@ const LEGACY_REFRESH_TOKEN_KEY = "RefreshToken";
 
 // ============================================================
 // API HELPER - wraps fetch with JSON handling
-// Usage: apiCall("/endpoint", "POST", { username, passwordHash })
+// Usage: apiCall("/endpoint", "POST", { username, password })
 // ============================================================
 export async function apiCall(endpoint, method = "GET", body = null, skipAuth = false) {
   try {
