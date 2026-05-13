@@ -38,7 +38,8 @@ export function LoginView({ onLogin }) {
           role: mockRole,
         };
 
-        login("mock-access-token", mockUser, remember, "mock-refresh-token");
+        // Mock mode keeps a local user session without inventing auth tokens.
+        login(null, mockUser, remember);
         setLoading(false);
         onLogin?.(mockRole);
       }, 800);
