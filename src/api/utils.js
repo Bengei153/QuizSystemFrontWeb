@@ -98,26 +98,38 @@ export function updateStoredUser(user, storage = getActiveStorage()) {
 
 export async function refreshStoredSession() {
   const refreshToken = getStoredRefreshToken();
+  const storedUser = getStoredUser();
 
   if (!refreshToken) {
     throw new Error("No refresh token available.");
   }
 
+  if (!storedUser?.id) {
+    throw new Error("No user id available for token refresh.");
+  }
+
+  const refreshEndpoint = /^https?:\/\//i.test(CONFIG.API.REFRESH_TOKEN)
+    ? CONFIG.API.REFRESH_TOKEN
+    : `${CONFIG.API_BASE_URL}${CONFIG.API.REFRESH_TOKEN}`;
+
   const response = await performRequest(
-    `${CONFIG.API_BASE_URL}${CONFIG.API.REFRESH_TOKEN}`,
+    refreshEndpoint,
     "POST",
-    { refreshToken },
+    { userId: storedUser.id, refreshToken },
     true,
     null
   );
+  const accessToken = response?.accessToken || response?.AccessToken;
+  const nextRefreshToken =
+    response?.refreshToken || response?.RefreshToken || refreshToken;
 
-  if (!response?.accessToken) {
+  if (!accessToken) {
     throw new Error("A new access token was not returned by the server.");
   }
 
   updateStoredTokens({
-    accessToken: response.accessToken,
-    refreshToken: response.refreshToken ?? refreshToken,
+    accessToken,
+    refreshToken: nextRefreshToken,
   });
 
   return response;
@@ -175,7 +187,7 @@ export function buildUserFromAuthResponse(data, fallback = {}) {
   );
 
   return {
-    id: user?.id || user?.Id || data?.userId || data?.id || "",
+    id: user?.id || user?.Id || data?.userId || data?.id || fallback.id || "",
     username:
       user?.username ||
       user?.userName ||
@@ -198,6 +210,43 @@ export function buildUserFromAuthResponse(data, fallback = {}) {
       fallback.organisation ||
       "",
   };
+}
+
+export function buildUserFromToken(token, fallback = {}) {
+  const payload = decodeJwtPayload(token);
+  const roleClaim =
+    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+  const nameClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+
+  return buildUserFromAuthResponse(payload, {
+    ...fallback,
+    id: payload?.sub || payload?.nameid || fallback.id,
+    username: payload?.[nameClaim] || payload?.name || fallback.username,
+    role: payload?.[roleClaim] || payload?.role || fallback.role,
+    organisation: payload?.organisation_id || fallback.organisation,
+  });
+}
+
+function decodeJwtPayload(token) {
+  if (!token || typeof token !== "string") {
+    return null;
+  }
+
+  const [, encodedPayload] = token.split(".");
+
+  if (!encodedPayload) {
+    return null;
+  }
+
+  try {
+    const base64 = encodedPayload.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), "=");
+    const json = atob(padded);
+
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
 }
 
 // Returns initials from a full name, e.g. "John Doe" -> "JD"

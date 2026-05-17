@@ -2,6 +2,7 @@ import { CONFIG } from "./config";
 import {
   apiCall,
   buildUserFromAuthResponse,
+  buildUserFromToken,
   clearStoredAuth,
   storeAuthSession,
   updateStoredUser,
@@ -20,7 +21,7 @@ function request(endpoint, method, body = null, options = {}) {
   return apiCall(resolveEndpoint(endpoint), method, body, options.skipAuth);
 }
 
-export function register(username, password, email, organisation, role = "User") {
+export function register(username, password, email, organisation, role = "Viewer") {
   return request(
     CONFIG.API.REGISTER,
     "POST",
@@ -85,14 +86,14 @@ export async function createAuthenticatedSession({
   remember = true,
 }) {
   const authData = await login(username, password);
-  const accessToken = authData?.accessToken;
-  const refreshToken = authData?.refreshToken || null;
+  const accessToken = authData?.accessToken || authData?.AccessToken;
+  const refreshToken = authData?.refreshToken || authData?.RefreshToken || null;
 
   if (!accessToken) {
     throw new Error("Authentication token was not returned by the server.");
   }
 
-  const provisionalUser = buildUserFromAuthResponse(authData, {
+  const provisionalUser = buildUserFromToken(accessToken, {
     username,
     role: "viewer",
   });

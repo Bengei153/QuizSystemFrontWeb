@@ -18,7 +18,7 @@ export function LoginView({ onLogin }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [organisation, setOrganisation] = useState("");
-  const [role, setRole] = useState("viewer");
+  const [role, setRole] = useState("Viewer");
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -53,7 +53,7 @@ export function LoginView({ onLogin }) {
         setPassword("");
         setEmail("");
         setOrganisation("");
-        setRole("viewer");
+        setRole("Viewer");
         setTab("login");
         setSuccess(
           response?.message || "Account created successfully. Sign in to continue."
@@ -168,8 +168,8 @@ export function LoginView({ onLogin }) {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <option value="viewer">Viewer</option>
-                <option value="admin">Admin</option>
+                <option value="Viewer">Viewer</option>
+                <option value="Admin">Admin</option>
               </select>
             </div>
           </>

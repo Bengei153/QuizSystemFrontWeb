@@ -1,4 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const AUTH_API_BASE_URL =
+  import.meta.env.VITE_AUTH_API_BASE_URL || "https://organisationalauth.onrender.com";
 
 // ============================================================
 // CONFIG — Edit API endpoints and app settings here
@@ -9,14 +11,15 @@ export const CONFIG = {
   APP_SUBTEXT:
     "Join 50,000+ students and professionals using QuizWiz to sharpen their skills and track their progress effortlessly.",
   API_BASE_URL,
+  AUTH_API_BASE_URL,
 
   // Auth endpoints
   API: {
-    REGISTER: "https://quizwebapp-dp64.onrender.com/api/Auth/register",
-    LOGIN: "https://quizwebapp-dp64.onrender.com/api/Auth/login",
-    REFRESH_TOKEN: "https://quizwebapp-dp64.onrender.com/api/Auth/refresh-token",
-    AUTHENTICATED: "https://quizwebapp-dp64.onrender.com/api/Auth",
-    ADMIN_ONLY: "https://quizwebapp-dp64.onrender.com/api/Auth/admin-only",
+    REGISTER: `${AUTH_API_BASE_URL}/api/Auth/register`,
+    LOGIN: `${AUTH_API_BASE_URL}/api/Auth/login`,
+    REFRESH_TOKEN: `${AUTH_API_BASE_URL}/api/Auth/refresh-token`,
+    AUTHENTICATED: `${AUTH_API_BASE_URL}/api/Auth`,
+    ADMIN_ONLY: `${AUTH_API_BASE_URL}/api/Auth/admin-only`,
 
     // Student endpoints
     DASHBOARD_STATS: "https://quizwebapp-dp64.onrender.com/api/student/stats",
@@ -44,7 +47,7 @@ export const CONFIG = {
   USE_MOCK_DATA: false,
 
   // Roles shown in auth forms
-  AUTH_ROLES: ["viewer", "admin"],
+  AUTH_ROLES: ["Viewer", "Admin"],
 
   // Pagination
   QUESTIONS_PER_PAGE: 5,
@@ -91,6 +94,5 @@ export const theme = {
   success: "#10b981",
   warning: "#f59e0b",
 };
-
 
 
