@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CONFIG, theme } from "../api/config";
 import { Sidebar } from "../components/Sidebar";
 import { Topbar } from "../components/Topbar";
@@ -17,6 +18,7 @@ import { useAuth } from "../auth/AuthContext";
 // ============================================================
 export function AdminLayout({ view, setView, onLogout }) {
   const { user } = useAuth();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navItems = [
     { key: "adminDashboard", label: "Dashboard", icon: <Icons.Dashboard /> },
     { key: "groups",         label: "Groups",    icon: <Icons.Folder />    },
@@ -33,13 +35,23 @@ export function AdminLayout({ view, setView, onLogout }) {
   return (
     <div className="qw-app">
       <div className="layout">
+        <button
+          className={`sidebar-backdrop ${isSidebarOpen ? "open" : ""}`}
+          onClick={() => setIsSidebarOpen(false)}
+          aria-label="Close navigation"
+        />
         <Sidebar
           logo="Quiz Manager"
           items={navItems}
           activeKey={view}
-          onNav={setView}
+          onNav={(nextView) => {
+            setView(nextView);
+            setIsSidebarOpen(false);
+          }}
           bottomItems={bottomItems}
           onLogout={onLogout}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
         <div className="main">
           <Topbar
@@ -47,6 +59,15 @@ export function AdminLayout({ view, setView, onLogout }) {
             userName={userName}
             userRole={userRole}
             showRole
+            extraLeft={
+              <button
+                className="mobile-menu-btn"
+                onClick={() => setIsSidebarOpen((open) => !open)}
+                aria-label="Open navigation"
+              >
+                <Icons.Menu />
+              </button>
+            }
             extraRight={
               <div className="icon-btn"><Icons.Moon /></div>
             }

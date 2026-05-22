@@ -65,7 +65,7 @@ export function CreateQuestion({ onNavigate }) {
       />
 
       {/* Footer */}
-      <div style={{ background: "white", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+      <div className="form-footer-shell">
         <div className="form-footer">
           <div className="form-steps">‹ › &nbsp; Step 3 of 3: Finalize Answers</div>
           <div className="form-actions">
@@ -123,7 +123,7 @@ function QuestionDetailsSection({ text, onChange }) {
 function AnswerOptionsSection({ answers, onCorrect, onTextChange }) {
   return (
     <div className="form-section">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+      <div className="answer-options-header">
         <div className="form-section-title" style={{ margin: 0 }}>③ Answer Options</div>
         <button className="link">+ Add Another Answer</button>
       </div>

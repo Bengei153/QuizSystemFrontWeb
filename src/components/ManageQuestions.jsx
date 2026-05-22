@@ -49,10 +49,9 @@ function QuestionFilters({ search, onSearch }) {
     <div className="filter-row">
       <div>
         <div className="filter-label">Search Question</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, border: "1px solid #e5e7eb", borderRadius: 8, padding: "8px 10px" }}>
+        <div className="filter-search-field">
           <Icons.Search />
           <input
-            style={{ border: "none", outline: "none", fontSize: 13, fontFamily: "inherit", flex: 1 }}
             placeholder="Enter keywords..."
             value={search}
             onChange={(e) => onSearch(e.target.value)}
@@ -75,7 +74,7 @@ function QuestionFilters({ search, onSearch }) {
 
 function QuestionsTable({ rows }) {
   return (
-    <table>
+    <table className="data-table">
       <thead>
         <tr>
           <th>ID</th>

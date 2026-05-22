@@ -41,7 +41,7 @@ export function QuizView({ onFinish }) {
         onToggleNav={() => setShowNav((s) => !s)}
       />
       <div className="page-content">
-        <div className={showNav ? "quiz-layout" : ""}>
+        <div className={`quiz-layout ${showNav ? "" : "quiz-layout-solo"}`.trim()}>
           <QuizQuestion
             question={q}
             questionIndex={current}
@@ -73,15 +73,15 @@ function QuizTopbar({ progress, time, showNav, onToggleNav }) {
   const isUrgent = time < 20;
   return (
     <div className="quiz-topbar">
-      <div className="quiz-topbar-progress" style={{ flex: 1 }}>
-        <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>
+      <div className="quiz-topbar-progress">
+        <div className="quiz-progress-label">
           OVERALL PROGRESS &nbsp;&nbsp;&nbsp; {progress}% COMPLETE
         </div>
         <div className="progress-bar-wrap">
           <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 16, marginLeft: 24 }}>
+      <div className="quiz-topbar-meta">
         <div className={`quiz-timer ${isUrgent ? "quiz-timer-red" : ""}`}>
           🕒 {formatTime(time)}
         </div>
@@ -95,7 +95,7 @@ function QuizTopbar({ progress, time, showNav, onToggleNav }) {
 
 function QuizQuestion({ question, questionIndex, total, selected, onSelect, onPrev, onNext, isFirst, isLast }) {
   return (
-    <div style={{ maxWidth: 640 }}>
+    <div className="quiz-question">
       <div className="quiz-q-num">Question {questionIndex + 1}/{total}</div>
       <div className="quiz-q-text">{question.text}</div>
 
@@ -119,7 +119,7 @@ function QuizQuestion({ question, questionIndex, total, selected, onSelect, onPr
         </button>
       </div>
 
-      <div className="quiz-nav-box" style={{ fontSize: 12, color: "#6b7280", lineHeight: 1.6 }}>
+      <div className="quiz-nav-box quiz-help-card" style={{ fontSize: 12, color: "#6b7280", lineHeight: 1.6 }}>
         <strong>ℹ Need help?</strong><br />
         You can jump between questions using the sidebar navigator on the right. Unsure about an answer?
         You can leave it blank and come back to it later. Your progress is saved automatically every time
@@ -131,7 +131,7 @@ function QuizQuestion({ question, questionIndex, total, selected, onSelect, onPr
 
 function QuizNavigator({ total, current, answers, onJump }) {
   return (
-    <div>
+    <div className="quiz-nav-panel">
       <div className="quiz-nav-box">
         <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 10 }}>QUESTION NAVIGATOR</div>
         <div className="quiz-nav-grid">

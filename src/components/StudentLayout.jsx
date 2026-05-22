@@ -23,6 +23,7 @@ export function StudentLayout({ view, setView, onLogout }) {
   const [inQuiz, setInQuiz] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const userName = user?.username || CONFIG.STUDENT.NAME;
 
   const navItems = [
@@ -32,6 +33,7 @@ export function StudentLayout({ view, setView, onLogout }) {
 
   // Navigate from within views — intercepts "quiz" route
   const handleNavigate = (target) => {
+    setIsSidebarOpen(false);
     if (target === "quiz") { setInQuiz(true); setShowResults(false); }
     else { setInQuiz(false); setShowResults(false); setView(target); }
   };
@@ -79,17 +81,36 @@ export function StudentLayout({ view, setView, onLogout }) {
   return (
     <div className="qw-app">
       <div className="layout">
+        <button
+          className={`sidebar-backdrop ${isSidebarOpen ? "open" : ""}`}
+          onClick={() => setIsSidebarOpen(false)}
+          aria-label="Close navigation"
+        />
         <Sidebar
           logo={CONFIG.APP_NAME}
           items={navItems}
           activeKey={view}
-          onNav={setView}
+          onNav={(nextView) => {
+            setView(nextView);
+            setIsSidebarOpen(false);
+          }}
           onLogout={onLogout}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
         <div className="main">
           <Topbar
             searchPlaceholder="Search..."
             userName={userName}
+            extraLeft={
+              <button
+                className="mobile-menu-btn"
+                onClick={() => setIsSidebarOpen((open) => !open)}
+                aria-label="Open navigation"
+              >
+                <Icons.Menu />
+              </button>
+            }
           />
           <div className="page-content">
             {view === "dashboard" && <StudentDashboard onNavigate={handleNavigate} />}
@@ -106,7 +127,7 @@ function MinimalTopbar({ userName }) {
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <div className="sidebar-logo" style={{ padding: 0 }}>
+        <div className="sidebar-logo">
           <div className="sidebar-logo-icon"><span style={{ color: "white", fontSize: 12 }}>✦</span></div>
           <span className="sidebar-logo-name">{CONFIG.APP_NAME}</span>
         </div>

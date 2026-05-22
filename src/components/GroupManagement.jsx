@@ -59,7 +59,7 @@ function GroupTree({ groups, expanded, onToggle }) {
           {/* Subgroups */}
           {expanded[g.id] &&
             g.subgroups.map((sg) => (
-              <SubgroupRows key={sg.id} subgroup={sg} parentName={g.name} />
+              <SubgroupRows key={sg.id} subgroup={sg} />
             ))}
 
           <div className="group-add-row">
@@ -71,7 +71,7 @@ function GroupTree({ groups, expanded, onToggle }) {
   );
 }
 
-function SubgroupRows({ subgroup, parentName }) {
+function SubgroupRows({ subgroup }) {
   return (
     <>
       <div className="group-row sub-level">

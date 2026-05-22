@@ -59,7 +59,7 @@ export function SearchBar({ value, onChange, placeholder = "Search...", children
         </svg>
         <input placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} />
       </div>
-      {children}
+      {children && <div className="filter-bar-actions">{children}</div>}
     </div>
   );
 }
@@ -87,7 +87,7 @@ export function PageHeader({ title, subtitle, children }) {
         <h1>{title}</h1>
         {subtitle && <p>{subtitle}</p>}
       </div>
-      {children && <div style={{ display: "flex", gap: 10 }}>{children}</div>}
+      {children && <div className="page-header-actions">{children}</div>}
     </div>
   );
 }

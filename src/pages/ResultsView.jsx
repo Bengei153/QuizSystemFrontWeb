@@ -36,12 +36,12 @@ export function ResultsView({ answers, onRetake, onContinue }) {
 function ResultsSummary({ score, correct, total, incorrect, title, onRetake }) {
   return (
     <div className="results-card">
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 28, flexWrap: "wrap" }}>
+      <div className="results-summary-layout">
         <ScoreRing score={score} />
-        <div style={{ flex: 1 }}>
+        <div className="results-summary-content">
           <div className="results-badge">Quiz Completed</div>
           <div className="results-title">{title}</div>
-          <div style={{ fontSize: 13, color: "#6b7280", marginBottom: 16 }}>
+          <div className="results-summary-copy">
             You've successfully finished the React Fundamentals quiz.
           </div>
           <div className="results-meta-grid">
@@ -73,7 +73,7 @@ function QuestionReview({ answers }) {
 
   return (
     <div>
-      <div style={{ marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div className="section-heading-row">
         <div>
           <div className="section-title">Question Review</div>
           <div className="section-sub">Go through each question to understand your incorrect answers.</div>
@@ -93,7 +93,7 @@ function QuestionReview({ answers }) {
                 <div className={`review-item-icon ${userAns === undefined ? "neutral" : isCorrect ? "correct" : "wrong"}`}>
                   {userAns === undefined ? "?" : isCorrect ? <Icons.Check /> : <Icons.X />}
                 </div>
-                <div style={{ flex: 1 }}>QUESTION {i + 1} — {q.text}</div>
+                <div className="review-question-text">QUESTION {i + 1} — {q.text}</div>
                 <span style={{ fontSize: 12, color: "#6b7280" }}>{isOpen ? "▲" : "▼"}</span>
               </div>
 
@@ -121,11 +121,11 @@ function QuestionReview({ answers }) {
 
 function ResultsCTA({ onContinue }) {
   return (
-    <div className="results-cta" style={{ marginTop: 24 }}>
-      <h3 style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 6 }}>
+    <div className="results-cta">
+      <h3 className="results-cta-title">
         Ready to take another challenge?
       </h3>
-      <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 12 }}>
+      <p className="results-cta-copy">
         Explore hundreds of quizzes across various technologies and improve your knowledge score.
       </p>
       <button className="btn-sm btn-purple" onClick={onContinue}>Continue Learning</button>

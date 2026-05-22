@@ -97,17 +97,30 @@ function ParticipationChart() {
 function DistributionChart() {
   const dist = MOCK.questionDistribution;
   const total = dist.reduce((a, c) => a + c.value, 0);
-  let angle = -Math.PI / 2;
-  const slices = dist.map((d) => {
-    const sweep = (d.value / total) * 2 * Math.PI;
-    const x1 = 60 + 50 * Math.cos(angle);
-    const y1 = 60 + 50 * Math.sin(angle);
-    angle += sweep;
-    const x2 = 60 + 50 * Math.cos(angle);
-    const y2 = 60 + 50 * Math.sin(angle);
-    const large = sweep > Math.PI ? 1 : 0;
-    return { ...d, path: `M60,60 L${x1},${y1} A50,50 0 ${large},1 ${x2},${y2} Z` };
-  });
+  const slices = dist.reduce(
+    ({ angle, slices: builtSlices }, item) => {
+      const sweep = (item.value / total) * 2 * Math.PI;
+      const startAngle = angle;
+      const endAngle = startAngle + sweep;
+      const x1 = 60 + 50 * Math.cos(startAngle);
+      const y1 = 60 + 50 * Math.sin(startAngle);
+      const x2 = 60 + 50 * Math.cos(endAngle);
+      const y2 = 60 + 50 * Math.sin(endAngle);
+      const large = sweep > Math.PI ? 1 : 0;
+
+      return {
+        angle: endAngle,
+        slices: [
+          ...builtSlices,
+          {
+            ...item,
+            path: `M60,60 L${x1},${y1} A50,50 0 ${large},1 ${x2},${y2} Z`,
+          },
+        ],
+      };
+    },
+    { angle: -Math.PI / 2, slices: [] }
+  ).slices;
 
   return (
     <div className="chart-card">

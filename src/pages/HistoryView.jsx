@@ -74,7 +74,7 @@ function HistoryStats() {
 function HistoryTable({ rows }) {
   return (
     <div className="table-wrap">
-      <table>
+      <table className="data-table">
         <thead>
           <tr>
             <th>Quiz Name ↑</th>

@@ -10,14 +10,38 @@ import { Icons } from "../assets/Icons";
 //   bottomItems — optional extra items at bottom (e.g. Settings)
 //   onLogout  — () => void
 // ============================================================
-export function Sidebar({ logo, items, activeKey, onNav, bottomItems = [], onLogout }) {
+export function Sidebar({
+  logo,
+  items,
+  activeKey,
+  onNav,
+  bottomItems = [],
+  onLogout,
+  isOpen = false,
+  onClose,
+}) {
+  const handleNav = (key) => {
+    onNav(key);
+    onClose?.();
+  };
+
+  const handleLogout = () => {
+    onClose?.();
+    onLogout?.();
+  };
+
   return (
-    <div className="sidebar">
-      <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">
-          <span style={{ color: "white", fontSize: 12 }}>✦</span>
+    <div className={`sidebar ${isOpen ? "open" : ""}`}>
+      <div className="sidebar-head">
+        <div className="sidebar-logo">
+          <div className="sidebar-logo-icon">
+            <span style={{ color: "white", fontSize: 12 }}>✦</span>
+          </div>
+          <span className="sidebar-logo-name">{logo}</span>
         </div>
-        <span className="sidebar-logo-name">{logo}</span>
+        <button className="sidebar-close" onClick={onClose} aria-label="Close navigation">
+          <Icons.X />
+        </button>
       </div>
 
       <nav className="sidebar-nav">
@@ -25,7 +49,7 @@ export function Sidebar({ logo, items, activeKey, onNav, bottomItems = [], onLog
           <div
             key={item.key}
             className={`sidebar-item ${activeKey === item.key ? "active" : ""}`}
-            onClick={() => onNav(item.key)}
+            onClick={() => handleNav(item.key)}
           >
             {item.icon}
             {item.label}
@@ -35,11 +59,11 @@ export function Sidebar({ logo, items, activeKey, onNav, bottomItems = [], onLog
 
       <div className="sidebar-bottom">
         {bottomItems.map((item) => (
-          <div key={item.key} className="sidebar-item" onClick={() => onNav(item.key)}>
+          <div key={item.key} className="sidebar-item" onClick={() => handleNav(item.key)}>
             {item.icon} {item.label}
           </div>
         ))}
-        <button className="sidebar-btn" onClick={onLogout}>
+        <button className="sidebar-btn" onClick={handleLogout}>
           <Icons.LogOut /> Logout
         </button>
       </div>
