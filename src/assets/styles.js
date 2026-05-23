@@ -8,7 +8,49 @@ export const globalCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: ${theme.bg}; color: ${theme.text}; }
+  body { font-family: 'DM Sans', sans-serif; background: ${theme.bg}; color: ${theme.text}; transition: background .2s, color .2s; }
+  
+  /* ---- Dark Mode ---- */
+  [data-theme="dark"] body { background: #1a1a2e; color: #e5e5e5; }
+  [data-theme="dark"] { --bg: #242438; --text: #e5e5e5; --text-muted: #a0a0b0; --border: #3a3a4e; --purple-light: #3d3d6b; }
+  [data-theme="dark"] .qw-app { background: #1a1a2e; }
+  [data-theme="dark"] .sidebar { background: #1e1e32; border-right-color: #3a3a4e; }
+  [data-theme="dark"] .sidebar-item { color: #a0a0b0; }
+  [data-theme="dark"] .sidebar-item:hover { background: #3d3d6b; color: #8b8dff; }
+  [data-theme="dark"] .sidebar-item.active { background: #3d3d6b; color: #8b8dff; border-right-color: #8b8dff; }
+  [data-theme="dark"] .main { background: #1a1a2e; }
+  [data-theme="dark"] .topbar { background: #1e1e32; border-bottom-color: #3a3a4e; }
+  [data-theme="dark"] .topbar-search { background: #242438; border-color: #3a3a4e; }
+  [data-theme="dark"] .topbar-search input { color: #e5e5e5; }
+  [data-theme="dark"] .icon-btn { background: #242438; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .page-content { background: #1a1a2e; }
+  [data-theme="dark"] .form-input { background: #242438; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .form-input:focus { border-color: ${theme.purple}; }
+  [data-theme="dark"] .tab-btn { background: #1e1e32; color: #a0a0b0; border-color: #3a3a4e; }
+  [data-theme="dark"] .tab-btn.active { background: ${theme.purple}; color: white; }
+  [data-theme="dark"] .btn-social { background: #1e1e32; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .btn-social:hover { border-color: ${theme.purple}; }
+  [data-theme="dark"] .stat-card { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .stat-card-label { color: #a0a0b0; }
+  [data-theme="dark"] .stat-card-value { color: #e5e5e5; }
+  [data-theme="dark"] .category-card { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .category-card:hover { border-color: ${theme.purple}; }
+  [data-theme="dark"] .rec-card { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .quiz-option { background: #1e1e32; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .quiz-option:hover { background: #3d3d6b; border-color: ${theme.purple}; }
+  [data-theme="dark"] .quiz-option.selected { background: #3d3d6b; border-color: ${theme.purple}; }
+  [data-theme="dark"] .quiz-nav-box { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .quiz-nav-num { background: #242438; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .results-card { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .table-wrap { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] thead th { background: #242438; color: #a0a0b0; border-color: #3a3a4e; }
+  [data-theme="dark"] tbody td { border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] tbody tr:hover { background: #242438; }
+  [data-theme="dark"] .filter-chip { background: #1e1e32; border-color: #3a3a4e; color: #e5e5e5; }
+  [data-theme="dark"] .search-box { background: #1e1e32; border-color: #3a3a4e; }
+  [data-theme="dark"] .search-box input { color: #e5e5e5; }
+  [data-theme="dark"] .dark-mode-toggle { background: transparent; border: none; cursor: pointer; color: #a0a0b0; padding: 8px; display: flex; align-items: center; justify-content: center; transition: color .2s; }
+  [data-theme="dark"] .dark-mode-toggle:hover { color: #8b8dff; }
   .qw-app { min-height: 100vh; }
 
   /* ---- Login ---- */
@@ -864,4 +906,11 @@ export const globalCSS = `
     .quiz-nav-row > * { flex-basis: 100%; }
     .table-footer { align-items: flex-start; }
   }
+
+  /* ---- Dark Mode Toggle (Light Mode) ---- */
+  .dark-mode-toggle {
+    background: transparent; border: none; cursor: pointer; color: ${theme.textMuted};
+    padding: 8px; display: flex; align-items: center; justify-content: center; transition: color .2s;
+  }
+  .dark-mode-toggle:hover { color: ${theme.purple}; }
 `;

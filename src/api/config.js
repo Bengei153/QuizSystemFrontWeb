@@ -13,34 +13,97 @@ export const CONFIG = {
   API_BASE_URL,
   AUTH_API_BASE_URL,
 
-  // Auth endpoints
+  // ============================================================
+  // ALL API ENDPOINTS (41 total) - Organized by Controller
+  // ============================================================
   API: {
+    // Auth endpoints (5)
     REGISTER: `${AUTH_API_BASE_URL}/api/Auth/register`,
     LOGIN: `${AUTH_API_BASE_URL}/api/Auth/login`,
     REFRESH_TOKEN: `${AUTH_API_BASE_URL}/api/Auth/refresh-token`,
     AUTHENTICATED: `${AUTH_API_BASE_URL}/api/Auth`,
     ADMIN_ONLY: `${AUTH_API_BASE_URL}/api/Auth/admin-only`,
 
-    // Student endpoints
-    DASHBOARD_STATS: "https://quizwebapp-dp64.onrender.com/api/student/stats",
-    CATEGORIES: "https://quizwebapp-dp64.onrender.com/api/categories",
-    RECOMMENDED_QUIZZES: "https://quizwebapp-dp64.onrender.com/api/student/recommended",
-    QUIZ_HISTORY: "https://quizwebapp-dp64.onrender.com/api/student/history",
-    QUIZ_START: "https://quizwebapp-dp64.onrender.com/api/quizzes/:id/start",
-    QUIZ_SUBMIT: "https://quizwebapp-dp64.onrender.com/api/quizzes/:id/submit",
-    QUIZ_RESULTS: "https://quizwebapp-dp64.onrender.com/api/quizzes/:id/results",
+    // ============================================================
+    // ADMIN CONTROLLER (9 endpoints) - Requires Admin role
+    // ============================================================
+    ADMIN_STATS: `${API_BASE_URL}/api/admin/stats`,
+    ADMIN_QUESTIONS: `${API_BASE_URL}/api/admin/questions`,
+    ADMIN_QUESTION_CREATE: `${API_BASE_URL}/api/admin/questions/create`,
+    ADMIN_QUESTION_UPDATE: `${API_BASE_URL}/api/admin/questions/:id`,
+    ADMIN_QUESTION_DELETE: `${API_BASE_URL}/api/admin/questions/:id`,
+    ADMIN_GROUPS: `${API_BASE_URL}/api/admin/groups`,
+    ADMIN_USERS: `${API_BASE_URL}/api/admin/users`,
+    ADMIN_ACTIVITY: `${API_BASE_URL}/api/admin/activity`,
+    ADMIN_EXPORT_PDF: `${API_BASE_URL}/api/admin/export/pdf`,
 
-    // Admin endpoints
-    ADMIN_STATS: "https://quizwebapp-dp64.onrender.com/api/admin/stats",
-    ADMIN_QUESTIONS: "https://quizwebapp-dp64.onrender.com/api/admin/questions",
-    ADMIN_QUESTION_CREATE: "https://quizwebapp-dp64.onrender.com/api/admin/questions/create",
-    ADMIN_QUESTION_UPDATE: "https://quizwebapp-dp64.onrender.com/api/admin/questions/:id",
-    ADMIN_QUESTION_DELETE: "https://quizwebapp-dp64.onrender.com/api/admin/questions/:id",
-    ADMIN_GROUPS: "https://quizwebapp-dp64.onrender.com/api/admin/groups",
-    ADMIN_USERS: "https://quizwebapp-dp64.onrender.com/api/admin/users",
-    ADMIN_ACTIVITY: "https://quizwebapp-dp64.onrender.com/api/admin/activity",
-    ADMIN_EXPORT_PDF: "https://quizwebapp-dp64.onrender.com/api/admin/export/pdf",
-    ADMIN_EXPORT_CSV: "https://quizwebapp-dp64.onrender.com/api/admin/export/csv",
+    // ============================================================
+    // FOLDER CONTROLLER (5 endpoints)
+    // ============================================================
+    FOLDER_CREATE: `${API_BASE_URL}/api/folder`,
+    FOLDER_GET: `${API_BASE_URL}/api/folder/:groupId/folders/:folderId`,
+    FOLDER_LIST: `${API_BASE_URL}/api/folder/:groupId/folders`,
+    FOLDER_UPDATE: `${API_BASE_URL}/api/folder/question-groups/:groupId/folders/:folderId`,
+    FOLDER_DELETE: `${API_BASE_URL}/api/folder/question-groups/:groupId/folders/:folderId`,
+
+    // ============================================================
+    // QUESTION GROUP CONTROLLER (4 endpoints)
+    // ============================================================
+    QUESTION_GROUP_GET: `${API_BASE_URL}/api/questiongroup/:id`,
+    QUESTION_GROUP_CREATE: `${API_BASE_URL}/api/questiongroup`,
+    QUESTION_GROUP_UPDATE: `${API_BASE_URL}/api/questiongroup/:id`,
+    QUESTION_GROUP_DELETE: `${API_BASE_URL}/api/questiongroup/:id`,
+
+    // ============================================================
+    // QUESTION CONTROLLER (5 endpoints)
+    // ============================================================
+    QUESTION_CREATE: `${API_BASE_URL}/api/question/Create`,
+    QUESTION_UPDATE: `${API_BASE_URL}/api/question/Update`,
+    QUESTION_SUBMIT: `${API_BASE_URL}/api/question/Submit`,
+    QUESTION_GET: `${API_BASE_URL}/api/question/:id`,
+    QUESTION_DELETE: `${API_BASE_URL}/api/question/:id`,
+
+    // ============================================================
+    // QUIZ ATTEMPT CONTROLLER (5 endpoints)
+    // ============================================================
+    QUIZ_START: `${API_BASE_URL}/api/quizzes/:id/start`,
+    QUIZ_SUBMIT: `${API_BASE_URL}/api/quizzes/:id/submit`,
+    QUIZ_RESULTS: `${API_BASE_URL}/api/quizzes/:id/results`,
+    QUIZ_MY_ATTEMPTS: `${API_BASE_URL}/api/quizzes/my-attempts`,
+    QUIZ_GET_ATTEMPT: `${API_BASE_URL}/api/quizzes/:attemptId`,
+
+    // ============================================================
+    // ANSWERS CONTROLLER (1 endpoint)
+    // ============================================================
+    ANSWER_SUBMIT: `${API_BASE_URL}/api/answers`,
+
+    // ============================================================
+    // QUESTION OPTIONS CONTROLLER (2 endpoints)
+    // ============================================================
+    QUESTION_OPTIONS_ADD: `${API_BASE_URL}/api/questionoptions/:questionId`,
+    QUESTION_OPTIONS_DELETE: `${API_BASE_URL}/api/questionoptions`,
+
+    // ============================================================
+    // SECURED FOLDER CONTROLLER (3 endpoints)
+    // ============================================================
+    SECURED_FOLDER_GET: `${API_BASE_URL}/api/question-groups/:groupId/folders/:folderId`,
+    SECURED_FOLDER_CREATE: `${API_BASE_URL}/api/question-groups/:groupId/folders`,
+    SECURED_FOLDER_UPDATE: `${API_BASE_URL}/api/question-groups/:groupId/folders/:folderId`,
+
+    // ============================================================
+    // SECURED QUESTION CONTROLLER (4 endpoints)
+    // ============================================================
+    SECURED_QUESTION_CREATE: `${API_BASE_URL}/api/folders/:folderId/questions`,
+    SECURED_QUESTION_GET: `${API_BASE_URL}/api/folders/:folderId/questions/:questionId`,
+    SECURED_QUESTION_UPDATE: `${API_BASE_URL}/api/folders/:folderId/questions/:questionId`,
+    SECURED_QUESTION_DELETE: `${API_BASE_URL}/api/folders/:folderId/questions/:questionId`,
+
+    // ============================================================
+    // STUDENT CONTROLLER (3 endpoints) - Requires Viewer role
+    // ============================================================
+    STUDENT_STATS: `${API_BASE_URL}/api/student/stats`,
+    STUDENT_HISTORY: `${API_BASE_URL}/api/student/history`,
+    STUDENT_QUESTION_GROUPS: `${API_BASE_URL}/api/student/question-groups`,
   },
 
   // Demo / mock data toggle — set to false to use real API

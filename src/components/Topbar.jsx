@@ -1,4 +1,5 @@
 import { Icons } from "../assets/Icons";
+import { DarkModeToggle } from "../theme/DarkModeToggle";
 import { getInitials } from "../api/utils";
 
 // ============================================================
@@ -24,6 +25,7 @@ export function Topbar({ searchPlaceholder = "Search...", userName, userRole, sh
 
       <div className="topbar-right">
         {extraRight}
+        <DarkModeToggle />
         <div className="icon-btn" style={{ position: "relative" }}>
           <Icons.Bell />
           <div className="notif-dot" />

@@ -4,6 +4,7 @@ import { LoginView } from "../pages/LoginView";
 import { StudentLayout } from "../components/StudentLayout";
 import { AdminLayout } from "../components/AdminLayout";
 import { useAuth } from "../auth/AuthContext";
+import { ThemeProvider } from "../theme/ThemeContext";
 import { getAppRole } from "../api/utils";
 
 // ============================================================
@@ -22,43 +23,45 @@ export default function App() {
   };
 
   return (
-    <>
-      <style>{globalCSS}</style>
+    <ThemeProvider>
+      <>
+        <style>{globalCSS}</style>
 
-      {!auth && !isLoading && <LoginView />}
+        {!auth && !isLoading && <LoginView />}
 
-      {!auth && isLoading && (
-        <div className="qw-app">
-          <div
-            style={{
-              minHeight: "100vh",
-              display: "grid",
-              placeItems: "center",
-              background: "#f8f9fc",
-              color: "#1a1a2e",
-              fontFamily: "inherit",
-            }}
-          >
-            Restoring your session...
+        {!auth && isLoading && (
+          <div className="qw-app">
+            <div
+              style={{
+                minHeight: "100vh",
+                display: "grid",
+                placeItems: "center",
+                background: "#f8f9fc",
+                color: "#1a1a2e",
+                fontFamily: "inherit",
+              }}
+            >
+              Restoring your session...
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {auth === "viewer" && (
-        <StudentLayout
-          view={viewerView}
-          setView={setViewerView}
-          onLogout={handleLogout}
-        />
-      )}
+        {auth === "viewer" && (
+          <StudentLayout
+            view={viewerView}
+            setView={setViewerView}
+            onLogout={handleLogout}
+          />
+        )}
 
-      {auth === "admin" && (
-        <AdminLayout
-          view={adminView}
-          setView={setAdminView}
-          onLogout={handleLogout}
-        />
-      )}
-    </>
+        {auth === "admin" && (
+          <AdminLayout
+            view={adminView}
+            setView={setAdminView}
+            onLogout={handleLogout}
+          />
+        )}
+      </>
+    </ThemeProvider>
   );
 }
